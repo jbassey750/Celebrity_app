@@ -1,0 +1,32 @@
+/* LIGHT THEME */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --card-bg: #f8f9fa;
+  --border-color: #e5e7eb;
+}
+
+/* DARK THEME */
+[data-theme="dark"] {
+  --bg-color: #0f172a;
+  --text-color: #ffffff;
+  --card-bg: #1e293b;
+  --border-color: #334155;
+}
+
+/* APPLY GLOBALLY */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: 0.3s;
+}
+
+.card {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.navbar {
+  background-color: var(--card-bg) !important;
+}

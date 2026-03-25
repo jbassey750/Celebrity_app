@@ -1,0 +1,113 @@
+/* auth.css */
+
+/* Container Flex Layout */
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Left Image Panel */
+.auth-left {
+  flex: 1;
+  background-image: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.auth-text {
+  background: rgba(0,0,0,0.5);
+  padding: 50px;
+  border-radius: 12px;
+}
+
+.auth-text h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.auth-text p {
+  font-size: 18px;
+}
+
+/* Right Form Panel */
+.auth-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f9fc;
+}
+
+/* Card */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+}
+
+/* Floating Labels */
+.form-floating > label {
+  top: 0.75rem;
+  left: 0.75rem;
+  transition: all 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  transform: translateY(-1.5rem) scale(0.85);
+  color: #2563eb;
+  font-weight: 500;
+}
+
+/* Inputs */
+.form-control {
+  height: 55px;
+  padding: 1rem 0.75rem 0.25rem 0.75rem;
+  font-size: 16px;
+}
+
+/* Button */
+.btn-primary {
+  background: #2563eb;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+/* Password toggle */
+.password-toggle {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #2563eb;
+}
+
+/* Switch text */
+.auth-card p span {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .auth-container {
+    flex-direction: column;
+  }
+
+  .auth-left {
+    display: none;
+  }
+}
