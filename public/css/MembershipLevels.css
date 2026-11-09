@@ -1,0 +1,81 @@
+.membership-section {
+    background: linear-gradient(135deg, #fdfcfd 0%, #f3f3f9 100%);
+    min-height: 100vh;
+}
+
+.plan-card {
+    transition: transform 0.3s ease;
+    border-radius: 20px !important;
+    position: relative;
+    overflow: visible;
+}
+
+.plan-card:hover {
+    transform: translateY(-10px);
+}
+
+.popular-border {
+    border: 2px solid #8e44ad !important;
+}
+
+.popular-tag {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: #8e44ad;
+    color: white;
+    padding: 2px 12px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    color: white;
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.check-icon {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.premium-btn {
+    background: linear-gradient(90deg, #a55eea, #d63031);
+    color: white !important;
+    border: none !important;
+}
+
+.premium-btn:hover {
+    opacity: 0.9;
+}
+
+.footer-features {
+    max-width: 800px;
+}
+
+.footer-icon {
+    font-size: 20px;
+    background: #f1f2f6;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    margin: 0 auto;
+    color: #8e44ad;
+}
+
+.x-small {
+    font-size: 11px;
+}

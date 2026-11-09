@@ -12,16 +12,14 @@ export default function Register() {
 
   // 🔥 Form State
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    phone: "",
-    country: "",
-    bio: ""
   });
 
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 🔥 Handle Change
   const handleChange = (e) => {
@@ -32,12 +30,13 @@ export default function Register() {
   };
 
   // 🔥 Handle Submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
-    const { fullName, email, password, confirmPassword } = formData;
+    const { name, email, password, confirmPassword } = formData;
 
-    if (!fullName || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirmPassword) {
       return setError("All required fields must be filled");
     }
 
@@ -49,18 +48,37 @@ export default function Register() {
       return setError("Passwords do not match");
     }
 
-    const existingUser = JSON.parse(localStorage.getItem("user"));
+    setIsSubmitting(true);
 
-    if (existingUser && existingUser.email === email) {
-      return setError("User already exists");
+    try {
+      const response = await fetch(
+        "https://artiste-meetup.vercel.app/api/v1/auth/register/fan",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const message = data?.message || data?.error || "Registration failed";
+        throw new Error(message);
+      }
+
+      const user = data?.user || data?.data || { name, email };
+      localStorage.setItem("user", JSON.stringify(user));
+      dispatch(login(user));
+      
+      navigate("/auth/verify-otp");
+    } catch (err) {
+      setError(err.message || "Registration failed");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    const newUser = { fullName, email };
-
-    localStorage.setItem("user", JSON.stringify(newUser));
-
-    dispatch(login(newUser));
-    navigate("/");
   };
 
   return (
@@ -86,8 +104,8 @@ export default function Register() {
               <label className="fw-semibold">Full Name *</label>
               <input
                 type="text"
-                name="fullName"
-                value={formData.fullName}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 className="form-control bg-light border-0"
                 placeholder="John Doe"
@@ -133,46 +151,21 @@ export default function Register() {
             </div>
           </div>
 
-          <div className="row g-3 mb-3">
-            <div className="col-md-6">
-              <label className="fw-semibold">Phone Number</label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="form-control bg-light border-0"
-                placeholder="+1 234 567 890"
-              />
-            </div>
-
-            <div className="col-md-6">
-              <label className="fw-semibold">Country</label>
-              <input
-                type="text"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                className="form-control bg-light border-0"
-                placeholder="Your country"
-              />
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <label className="fw-semibold">About You</label>
-            <textarea
-              name="bio"
-              value={formData.bio}
-              onChange={handleChange}
-              className="form-control bg-light border-0"
-              rows="3"
-              placeholder="Tell us about yourself..."
+          <div className="form-check mb-4">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="showPassword"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
             />
+            <label className="form-check-label" htmlFor="showPassword">
+              Show password
+            </label>
           </div>
 
-          <button type="submit" className="btn btn-dark w-100">
-            Create Account
+          <button type="submit" className="btn btn-dark w-100" disabled={isSubmitting}>
+            {isSubmitting ? "Creating Account..." : "Create Account"}
           </button>
 
         </form>

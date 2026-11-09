@@ -64,22 +64,22 @@ const Nav = () => {
       >
         <ul className="navbar-nav align-items-center gap-2 gap-md-3 mt-3 mt-lg-0">
           <li className="nav-item">
-            <Link className="nav-link fw-medium" to="/browse">
-              Celebrity
+            <Link className="nav-link fw-medium" to="/admin/create-celeb">
+              Add Celebrity
             </Link>
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link fw-medium" to="/">
+            <Link className="nav-link fw-medium" to="/admin">
               Dashboard
             </Link>
           </li>
 
-          <li className="nav-item">
-            <Link className="nav-link fw-medium" to="/book">
-              Book Session
-            </Link>
-          </li>
+          {/* <li className="nav-item"> */}
+            {/* <Link className="nav-link fw-medium" to="/book"> */}
+              {/* Book Session */}
+            {/* </Link> */}
+          {/* </li> */}
 
           {/* THEME TOGGLE */}
           {/* <li className="nav-item mx-lg-2"> */}
@@ -94,7 +94,7 @@ const Nav = () => {
               }`}
               style={{ fontSize: "14px" }}
             >
-              John Doe
+              Profile
             </div>
           </li>
         </ul>

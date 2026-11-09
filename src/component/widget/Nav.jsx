@@ -25,7 +25,7 @@ const Nav = () => {
       {/* LOGO */}
       <Link
         className="navbar-brand d-flex align-items-center gap-2 shadow-none"
-        to="/"
+        to="/app"
       >
         <div
           className="text-white d-flex justify-content-center align-items-center"
@@ -43,7 +43,7 @@ const Nav = () => {
         <span
           className={`fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`}
         >
-          Celebrity Connect
+          Celebrity Fan 
         </span>
       </Link>
 
@@ -64,26 +64,26 @@ const Nav = () => {
       >
         <ul className="navbar-nav align-items-center gap-2 gap-md-3 mt-3 mt-lg-0">
           <li className="nav-item">
-            <Link className="nav-link fw-medium" to="/browse">
-              Celebrity
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link className="nav-link fw-medium" to="/">
+            <Link className="nav-link fw-medium" to="/app">
               Dashboard
             </Link>
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link fw-medium" to="/book">
+            <Link className="nav-link fw-medium" to="/app/browse">
+              Celebrity
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link className="nav-link fw-medium" to="/app/book">
               Book Session
             </Link>
           </li>
 
           {/* THEME TOGGLE */}
           {/* <li className="nav-item mx-lg-2"> */}
-            {/* <ThemeToggle /> */}
+          {/* <ThemeToggle /> */}
           {/* </li> */}
 
           {/* USER */}
@@ -94,7 +94,9 @@ const Nav = () => {
               }`}
               style={{ fontSize: "14px" }}
             >
-              John Doe
+              <Link className="nav-link fw-medium" to="/app/profile">
+                John Doe
+              </Link>
             </div>
           </li>
         </ul>

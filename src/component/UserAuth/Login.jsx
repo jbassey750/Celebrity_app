@@ -16,6 +16,7 @@ export default function Login() {
   });
 
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 🔥 Handle Input Change
   const handleChange = (e) => {
@@ -26,18 +27,46 @@ export default function Login() {
   };
 
   // 🔥 Handle Submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     const { email, password } = formData;
 
-    if (email === "admin@gmail.com" && password === "123456") {
-      const userData = { email };
+    if (!email || !password) {
+      return setError("Email and password are required");
+    }
 
-      dispatch(login(userData));
-      navigate("/");
-    } else {
-      setError("Invalid email or password");
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(
+        "https://artiste-meetup.vercel.app/api/v1/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const message = data?.message || data?.error || "Login failed";
+        throw new Error(message);
+      }
+
+      const user = data?.user || data?.data || { email };
+      localStorage.setItem("user", JSON.stringify(user));
+      dispatch(login(user));
+      console.log("Login successful:", user);
+      navigate("/app");
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -98,35 +127,13 @@ export default function Login() {
             type="submit"
             className="btn btn-dark w-100 py-2 mb-4 fw-bold rounded-3"
             style={{ backgroundColor: "#050517" }}
+            disabled={isSubmitting}
           >
-            Sign In
+            {isSubmitting ? "Signing In..." : "Sign In"}
           </button>
         </form>
 
         {/* Divider */}
-        <div className="d-flex align-items-center mb-4">
-          <hr className="flex-grow-1 m-0" />
-          <span className="mx-3 text-muted" style={{ fontSize: "11px" }}>
-            DEMO ACCOUNTS
-          </span>
-          <hr className="flex-grow-1 m-0" />
-        </div>
-
-        {/* Demo Accounts */}
-        <div className="bg-light p-3 rounded-3 mb-2">
-          <p className="mb-0 fw-bold">Fan Account:</p>
-          <p className="mb-0 text-muted">
-            fan@demo.com / any password
-          </p>
-        </div>
-
-        <div className="bg-light p-3 rounded-3 mb-4">
-          <p className="mb-0 fw-bold">Celebrity Account:</p>
-          <p className="mb-0 text-muted">
-            celebrity@demo.com / any password
-          </p>
-        </div>
-
         {/* Footer */}
         <p className="text-center mb-0">
           Don't have an account?{" "}
