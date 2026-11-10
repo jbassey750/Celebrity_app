@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { ShieldCheck, CheckCircle2 } from 'lucide-react'; // Icons
 import { useNavigate } from 'react-router-dom';
+import api from "../../api/axios";
 
 const OtpVerificationPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -43,23 +44,7 @@ const OtpVerificationPage = () => {
         throw new Error("Email not found. Please register first.");
       }
 
-      const response = await fetch(
-        "https://artiste-meetup.vercel.app/api/v1/auth/verify-email",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, otp: otpCode }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        const message = data?.message || data?.error || "Verification failed";
-        throw new Error(message);
-      }
+      await api.post("/auth/verify-email", { email, otp: otpCode });
 
       setShowModal(true);
       // Auto navigate after showing success modal briefly
@@ -67,7 +52,7 @@ const OtpVerificationPage = () => {
         navigate("/");
       }, 2000);
     } catch (err) {
-      setError(err.message || "Verification failed");
+      setError(err.response?.data?.message || err.response?.data?.error || err.message || "Verification failed");
     } finally {
       setIsVerifying(false);
     }

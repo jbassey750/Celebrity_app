@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
+import api from "../../api/axios";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -40,23 +41,7 @@ export default function Login() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        "https://artiste-meetup.vercel.app/api/v1/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        const message = data?.message || data?.error || "Login failed";
-        throw new Error(message);
-      }
+      const { data } = await api.post("/auth/login", { email, password });
 
       const user = data?.user || data?.data || { email };
       localStorage.setItem("user", JSON.stringify(user));
@@ -64,7 +49,7 @@ export default function Login() {
       console.log("Login successful:", user);
       navigate("/app");
     } catch (err) {
-      setError(err.message || "Login failed");
+      setError(err.response?.data?.message || err.response?.data?.error || err.message || "Login failed");
     } finally {
       setIsSubmitting(false);
     }

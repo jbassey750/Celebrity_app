@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 // import { login } from "../../redux/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import api from "../../../api/axios";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -50,23 +51,7 @@ export default function Register() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        "https://artiste-meetup.vercel.app/api/v1/auth/register/admin",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email, password }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        const message = data?.message || data?.error || "Registration failed";
-        throw new Error(message);
-      }
+      const { data } = await api.post("/auth/register/admin", { name, email, password });
 
       const user = data?.user || data?.data || { name, email };
       localStorage.setItem("user", JSON.stringify(user));
@@ -74,7 +59,7 @@ export default function Register() {
       
       navigate("/auth/verify-otp");
     } catch (err) {
-      setError(err.message || "Registration failed");
+      setError(err.response?.data?.message || err.response?.data?.error || err.message || "Registration failed");
     } finally {
       setIsSubmitting(false);
     }
