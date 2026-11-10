@@ -16,7 +16,7 @@ import CheckoutPage from "./component/Pages/CheckoutPage";
 import AdminDashboard from "./component/Pages/Admin/AdminDashboard";
 import AdminCreateUser from "./component/Pages/Admin/AdminCreateUser"; 
 import AdminCreateCeleb from "./component/Pages/Admin/AdminCreateCeleb" 
-import AdminLogin from "./component/Pages/Admin/adminlogin"
+import AdminLogin from "./component/Pages/Admin/Adminlogin"
 import AdminSignup from "./component/Pages/Admin/AdminSignup"
 import ChatPage from "./component/Pages/Messages";
 import MembershipLevels from "./component/Pages/MembershipLevels"
